@@ -1,0 +1,23 @@
+<div class="body-parent">
+    {{>navigation}}
+
+    <div class="main-area">
+        <div class="edit-title">
+            <h1>Edit Profile Details</h1>
+        </div>
+        <form id="profileForm" action="save-profile-changes" method="post" enctype="multipart/form-data">
+            <div class="container">
+                <label>Name </label>
+                <input type="text" value="{{name}}" name="name" required> <br> 
+                <label>Username </label>   
+                <input type="text" value="{{username}}" name="username" required><br>  
+                <label>Bio</label>
+                <input type="text" value ="{{bio}}" name="bio"/><br>
+                <label>Your Profile Picture</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" /><br>
+                <button type="submit" id="save">Save</button>
+            </div>
+        </form>
+        </div>
+    </div>
+

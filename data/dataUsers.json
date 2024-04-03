@@ -1,0 +1,43 @@
+[
+    {
+        "userID": 1001,
+        "email": "marky.delacruz@gmail.com",
+        "name": "Marky Dela Cruz",
+        "username": "markyyy",
+        "password":"$2b$10$RgOh2Sbjv7xfrTbYykp3guso0LFInwA9XOmubzPJRiqePvEzr9Wom",
+        "userBio": "I have no enemies.",
+        "profilePicture": "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_1280.png"
+    },{
+        "userID": 1002,
+        "email": "rica.cruz@gmail.com",
+        "name": "Rica Cruz",
+        "username": "RicaCruzcxcxz",
+        "password":"$2b$10$a02yt5Qry8xctwaoKn.lKu0AmQKdFj/WtBFMzcljM0xAgh87kHE9a",
+        "userBio": "Bacsilog Lover.",
+        "profilePicture": "https://staticg.sportskeeda.com/editor/2023/04/eced8-16818785936279-1920.jpg"
+    },{
+        "userID": 1003,
+        "email": "joy.reyes@gmail.com",
+        "name": "Joy Reyes",
+        "username": "Joyiee",
+        "password": "$2b$10$mlu0xkiSxsDDC6Q6jKOKM.SwBvvrBLt9hmZ7slRA3xSSkHPKJyrAi",
+        "userBio": "Yay.",
+        "profilePicture": "https://pics.craiyon.com/2023-10-23/903eec12f88642079733f99cf3e1eb17.webp"
+    }, {
+        "userID": 1004,
+        "email": "nick.makino@gmail.com",
+        "name": "Nick Makino",
+        "username": "NickzRoyalty@@",
+        "password":"$2b$10$t1UAIGqFQ/LRZjGD5VSAweTgMdfaxxlBmrw95DSmmIod.2yByS8t.",
+        "userBio": "I decided to uncredit a song.",
+        "profilePicture": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg/640px-Andrew_Tate_on_%27Anything_Goes_With_James_English%27_in_2021.jpg"
+    },{
+        "userID": 1005,
+        "email": "angel.deguia@gmail.com",
+        "name": "Angel de Guia",
+        "username": "cupidSmile@23",
+        "password":"$2b$10$YaUMMKDhshAab2SpHyN2ruYEX7IolvSFk1Oi9L5tkjCTtIjv3Ar0.",
+        "userBio": "Still single.",
+        "profilePicture": "https://avatarfiles.alphacoders.com/995/99549.jpg"
+    }
+]

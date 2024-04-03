@@ -1,0 +1,7 @@
+<div class="review-reaction">
+    <button onclick="window.location.href='/editreview?reviewId={{reviewID}}'">Edit</button>
+    <form class="delete-form" action="/delete-review?reviewId={{reviewID}}" method="post">
+        <input type="hidden" name="reviewId" value="{{reviewID}}">
+        <button type="submit">Delete Post</button>
+    </form>
+</div>

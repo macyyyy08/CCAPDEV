@@ -1,0 +1,60 @@
+<div class="review-box">
+	<div class="image-container">
+		<img src="{{stall_image}}" alt="Image">
+	</div>
+	<div class="review-content">
+		<h1>Store to Review: {{stall_name}}</h1>
+		<form id="reviewForm" onsubmit="return checkAddForm()" method="post">
+		<tr>
+			<td><h2><label>Review</label></h2></td>
+			<td><textarea id="review" name="review" rows="8" cols="50" placeholder="Write your review here..."></textarea></td>
+		</tr>
+		<tr>
+			<div class="rating-container">
+			<td><h2><label>Food Quality</label></h2></td>
+			<td>
+			<select name="rating1" id="rating1">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			</td>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<div class="rating-container">
+			<td><h2><label>Service</label></h2></td>
+			<td>
+			<select name="rating2" id="rating2">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			</td>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<div class="rating-container">
+			<td><h2><label>Cleanliness</label></h2>
+				<select name="rating3" id="rating3">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				</select>
+			</td>
+			</div>
+			</td>
+			<td><input class="recommended-box" type="text" name="recom" placeholder="Recommended Food"></input></td>
+		</tr>
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+</div>

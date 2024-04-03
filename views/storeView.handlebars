@@ -1,0 +1,79 @@
+<!-- Ate Rica's Page Start -->
+
+<div class="parent-container">
+
+    {{> navigation}}
+    
+    <div class="picture-container">
+        <img class="picture" src="{{stall_image}}"/>
+        <div class="picture-text">{{title}}</div>
+    </div>
+
+    <div class="content-container">
+        <div class="left-container">
+            <div class="rating-container">
+                <div class="rating-header">Overall Rating</div>
+                <div class="combined-container">
+                    <div class="star">&#9733;</div>
+                    <div class="overall-rating">{{averageRating}}</div>
+                </div>
+                <div class="comment-container">{{stall_desc}}</div>
+                <div class="must-try"><b>MUST TRY:</b> {{stall_must_try}}</div>
+            </div>
+                
+            <a href="{{redirectToAddReview stall_id isLoggedIn}}"><div class="new-rating">New Rating</div></a>
+
+            <div class="stalls-container">
+                <div class="stall-header"><b>Other Stalls</b></div>
+                {{#each all_stall_data}}
+                    <div class="stall">
+                        <a href="{{redirectToReview this.stall-number}}">
+                            <div class="stall-picture">
+                                <img class="picture" src="{{this.stall-image}}"/>
+                            </div>                            
+                            <div class="stall-name">
+                                <b>{{this.stall-name}}</b>
+                                <div class="mini-rating"><span class="mini-star"> &#9733 </span> {{this.stall-average}} ({{all_stall_data.stall-rating}} Reviews)</div> 
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="right-container">
+            <div class="review-header">User Reviews ({{total_reviews}})</div>
+            {{#each review_data}}
+                <div class="review">
+                    <div class="review-top">
+                        <div class="user-image"><img src="{{getUserProperty ../users this.userID 'profilePicture'}}"/></div>
+                        <div class="user-container">
+                            <div class="review-date">{{this.review-date}}</div>
+                            <a href="{{redirectToGuestProfile (getUserProperty ../users this.userID 'username')}}"><div class="user-name">{{getUserProperty ../users this.userID 'username'}}</div></a>
+                        </div>
+                        <div class="review-rating">
+                            <div class="user-rating">Overall Rating: {{this.average-rating}}</div>
+                            <div class="quality-rating">Quality:<span class="star-ratings">{{this.user-qual-rating}}</span></div>
+                            <div class="service-rating">Service:<span class="star-ratings">{{this.user-serv-rating}}</span></div>
+                            <div class="pricing-rating">Pricing:<span class="star-ratings">{{this.user-price-rating}}</span></div>
+                        </div>
+                    </div>
+                    <div class="review-mid">
+                        {{this.review-comment}}
+                        <div class="review-image">{{this.review-image}}</div>
+                    </div>
+                    <div class="review-bot">
+                        <div class="recommended"><b>Recommended:</b> {{this.review-reco}} </div>
+                        <div class="combined-rate">
+                            <a href="Login.html"><div class="thumbs-up"><i class="fa fa-thumbs-up"></i></div></a>
+                            <a href="Login.html"><div class="thumbs-down"><i class="fa fa-thumbs-down"></i></div></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    {{> footer}}
+</div>
+
+<!-- Ate Rica's Page End -->

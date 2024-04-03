@@ -1,0 +1,59 @@
+{{> navigation}}
+        <div class="search">
+            <div class="tagline">
+                <p>Tough choice on where to eat?</p>
+                <div>
+                    <input type="text" placeholder="Search for a food stall.." id="myInput" onkeyup="filterFunction()" onclick="showDropdown()" onblur="hideDropdown()">
+                    <div id="myDropdown" class="dropdown-content">
+                        {{#each data_stall}}
+                        <a href="{{redirectToReview stall-number}}">{{stall-name}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-stalls">
+            <table>
+            {{#each data_stall}}
+                {{#if (startingRow stall-number)}}
+                    <tr>
+                {{/if}}
+                <td>
+                    <a href="{{redirectToReview stall-number}}">
+                    <div class="stall">
+                        <div class="stall-image">
+                            <img src="{{stall-image}}">
+                        </div>
+                        <div class="stall-desc">
+                            <h1>{{stall-name}}</h1>
+                            <div class="star-rating">
+                                <div class="star">
+                                    <p>&bigstar;</p>
+                                </div>
+                                <div class="rating">
+                                    <p>{{stall-average}} ({{stall-rating}} Reviews)</p>
+                                </div>
+                            </div>
+                            <div class="about">
+                                <p>{{stall-desc}}</p>
+                                <h2><b>MUST TRY:</b>&nbsp;{{stall-must-try}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </td>
+            {{#if (endingRow stall-number)}}
+                </tr>
+            {{/if}}
+        {{/each}}
+    </table>
+</div>
+
+
+        <div class="register">
+            <p>Can’t see your food stall?</p>
+            <a href="/SignUp"><button type="button">Register Now</button></a>
+        </div>
+
+        {{> footer}}

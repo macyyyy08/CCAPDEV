@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.nav-bar {
+    display: flex;
+}
+.nav-left {
+    height: auto;
+    background-color: #ECE3D5;
+    width: 50%; 
+    padding: 2%;
+}
+
+.nav-left a {
+    text-decoration: none;
+    color: #EC4D02;
+    font-family: sans-serif;
+    font-size: 2vw;
+    margin: 20px;
+    font-weight: bold;
+}
+.nav-right {
+    height: auto;
+    background-color: #ECE3D5;
+    width: 50%; 
+    text-align: right;
+    padding: 2%;
+}
+
+.nav-right button {
+    background-color: #EC4D02;
+    padding: 1.5% 5%;
+    text-align: center;
+    border-radius: 50px;
+    border: 0px;
+    font-family: sans-serif;
+    font-size: 1vw;
+    color: #ECE3D5;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-right button:hover {
+    background-color: #EC4D02;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+/* middle box */
+
+.login-container,
+.forgot-password-container,
+.signup-container {
+    display: flex;
+    background-color: #ECE3D5;
+    justify-content: center;
+    align-items: flex-start; /* Align items to top */
+    height: 100vh;
+    padding-top: 50px;
+}
+
+
+.login-content,
+.forgot-password-content,
+.signup-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 40px;
+    border-right: 1px solid #ddd; /* Separates content and image */
+}
+
+.login-content h2,
+.forgot-password-content h2,
+.signup-content h2 {
+    font-size: xx-large;
+    margin-bottom: 20px;
+    color: #EC4D02;
+    text-align: left; /* Align text to the left */
+}
+
+.login-content button,
+.forgot-password-content button,
+.signup-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: #EC4D02;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.login-content button:hover,
+.forgot-password-content button:hover,
+.signup-content button:hover {
+    background-color: #EC4D02;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.login-box,
+.forgot-password-box,
+.signup-box {
+    background-color: #E9D2AA;
+    width: 1300px; /* Width of the login box */
+    height: 650px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+
+
+.login-content input,
+.forgot-password-content input,
+.signup-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 25px;
+}
+
+.forgot-password,
+.return-login {
+    margin-top: 10px;
+}
+
+.forgot-password a,
+.return-login a {
+    color: #EC4D02;
+    text-decoration: none;
+}
+
+.forgot-password a:hover,
+.return-login a:hover {
+    text-decoration: underline;
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide overflowing content */
+}
+
+.image-container img {
+    width: 100%; /* Set width to fill its container */
+    height: 100%; /* Set height to fill its container */
+    object-fit: cover; /* Scale image while preserving aspect ratio */
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right side */
+}

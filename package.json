@@ -1,0 +1,21 @@
+{
+  "name": "mvc-applied",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "mongoos": "^0.0.1-security",
+    "mongoose": "^8.2.4",
+    "multer": "^1.4.5-lts.1"
+  },
+  "description": "TaftChoice is a web application designed specifically for DLSU students and anyone in Taft who seeks delicious food options within Agno Compound. Making decisions on where to dine can be daunting and tiring, especially for busy students. The app's goal is to simplify this process by providing a comprehensive platform where users can easily access reviews and essential information about food stalls in Agno."
+}

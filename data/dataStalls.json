@@ -1,0 +1,51 @@
+[
+    {
+        "stall-number": 1,
+        "stall-image":"https://lh3.googleusercontent.com/pw/ABLVV845z8A_0obdYtgt7oEQxHQeiusdbdc8-cdI5_90IZLepnQ_yVFFiBD_nS0q6mXqX23KEoKelOfSPYKbUWkEEputtAPOB-SuFuoj2BmTES6O3qy8e2o=w1920-h1080",
+        "stall-name": "Ate Rica's Bacsilog",
+        "stall-average": "3.4",
+        "stall-rating": "5",
+        "stall-desc": "We serve tasty, quality, fast, and clean superior-SILOG meals in schools,commercial spaces, & supermarkets.",
+        "stall-must-try": "Bacsilog"
+    },{
+        "stall-number": 2,
+        "stall-image":"https://lh3.googleusercontent.com/pw/ABLVV86Rk-iB5OhziIg23rP6jPhDqJIC40vUvHScTzSj9rk-SvjJe9SFk63jrHZk-S-S6b3XoBYsoSW6Kxglly5Z6647inmmb3Zj07kmDxony9Q5X0F_Aus=w1920-h1080",
+        "stall-name": "Good Munch",
+        "stall-average": "3.5",
+        "stall-rating": "5",
+        "stall-desc": "Good Munch serves SO MUNCH BETTER Asian Fusion Recipes curated with lots of love from Chef Munch!",
+        "stall-must-try": "Beef Salpicao"
+    },{
+        "stall-number": 3,
+        "stall-image":"https://lh3.googleusercontent.com/pw/ABLVV85YgUos0q8X0-LhKu1Oom1Ag4ttyRFFGNst0-jhgbmgJr_uR43H9Yk6nNgS8RgcC9u3t25oe3H4q-fDh7211_qmUf3h0kS_zRRsBG-PtnEQtuqcdVg=w1920-h1080",
+        "stall-name": "Happy 'N Healthy",
+        "stall-average": "4",
+        "stall-rating": "5",
+        "stall-desc": "Food choices that harmoniously balance Happiness and Healthiness.",
+        "stall-must-try": "Grilled Chicken"
+    }, {
+        "stall-number": 4,
+        "stall-image":"https://cdn.phonebooky.com/blog/wp-content/uploads/2019/07/05140140/Potpots2.jpg",
+        "stall-name": "Potato Giant",
+        "stall-average": "3.7",
+        "stall-rating": "5",
+        "stall-desc": "The best and most innovative homemade potato snacks in town!",
+        "stall-must-try": "Mojo Potatoes"
+    },{
+        "stall-number": 5,
+        "stall-image":"https://lh3.googleusercontent.com/pw/ABLVV87F2QToWGx0o2pr1KBRMsxdQwI41GVEZj50ZgjcKvQSNpnLB-CQ3tRplpt02I6k0pz_Jh5Q4O9Zhvl5GUBWHgdkDSVKF_T4LvC8gN2DdhPMIZipCxU=w1920-h1080",
+        "stall-name": "Colonels Curry",
+        "stall-average": "3.8",
+        "stall-rating": "5",
+        "stall-desc": "Your go-to for specialty modern katsu curry.",
+        "stall-must-try": "Laksa Curry"
+    },{
+        "stall-number": 6,
+        "stall-image":"https://lh3.googleusercontent.com/pw/ABLVV856JWgZPqWKFzD1ZtPeFZj9ARD3uELfowa_Z8pzjX5bzqXT-wP1GYt5D_owUX7Q6oi0E7NDGWvvwtqGtjeXsBlOWwtYW46Gqag3EW-Zarbwh_qmlzA=w1920-h1080",
+        "stall-name": "Famous Belgian Waffle",
+        "stall-average": "3.8",
+        "stall-rating": "5",
+        "stall-desc": "The First & Original Waffle Sandwich in the Philippines that only serve all premium fillings at a very affordable price!",
+        "stall-must-try": "Hazelnut"
+    }
+]

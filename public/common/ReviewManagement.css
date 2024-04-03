@@ -1,0 +1,229 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ECE3D5;
+    color: white;
+}
+
+.nav-bar {
+    display: flex;
+}
+
+.nav-left {
+    height: auto;
+    background-color: #ECE3D5;
+    width: 50%; 
+    padding: 2%;
+}
+
+.nav-left a {
+    text-decoration: none;
+    color: #EC4D02;
+    font-family: sans-serif;
+    font-size: 2vw;
+    margin: 20px;
+    font-weight: bold;
+}
+.nav-right {
+    height: auto;
+    background-color: #ECE3D5;
+    width: 50%; 
+    text-align: right;
+    padding: 2%;
+}
+
+.nav-right button {
+    background-color: #EC4D02;
+    padding: 1.5% 5%;
+    text-align: center;
+    border-radius: 50px;
+    border: 0px;
+    font-family: sans-serif;
+    font-size: 1vw;
+    color: #ECE3D5;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-right button:hover {
+    background-color: #EC4D02;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+
+.user-image{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.user-image > img{
+    width: 100%;
+    border-radius: 100%;
+}
+.user-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 40%;
+}
+
+
+.review-container {
+    display: flex;
+    background-color: #ECE3D5;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    height: 100vh;
+    padding-top: 50px;
+}
+
+.review-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 40px;
+    padding-bottom: 90px;
+}
+
+.review-content h1 {
+    margin-top: 60px;
+    margin-bottom: 0px;
+    color: #EC4D02;
+    text-align: left; /* Align text to the left */
+}
+
+.review-content h2 {
+    margin-bottom: 10px;
+    color: #EC4D02;
+    text-align: left; /* Align text to the left */
+}
+
+.review-content h3 {
+    font-size: medium;
+    margin-bottom: 5px;
+    color: #EC4D02;
+    text-align: left; /* Align text to the left */
+}
+
+.review-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: #EC4D02;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.review-content button:hover {
+    background-color: #EC4D02;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.review-box {
+    background-color: #E9D2AA;
+    width: 1280px; /* Width of the login box */
+    height: 720px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.review-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 25px;
+}
+
+.forgot-password {
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #EC4D02;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide overflowing content */
+}
+
+.image-container img {
+    width: 100%; /* Set width to fill its container */
+    height: 100%; /* Set height to fill its container */
+    object-fit: cover; /* Scale image while preserving aspect ratio */
+    border-radius: 10px 0 0 10px; /* Rounded corners on the right side */
+}
+
+.profile-label {
+    text-align: center;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 25px;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #EC4D02; /* Change border color on focus */
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+}
+
+.rating-container select {
+    flex: 1; /* Take up remaining space */
+    padding: 10px;
+    margin-left: 10px; /* Add margin for spacing */
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.recommended-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 40px;
+    border-right: 1px solid #ddd; /* Separates content and image */
+}
+
+.recommended-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 25px;
+}

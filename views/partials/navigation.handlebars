@@ -1,0 +1,18 @@
+<div class="nav-bar">
+    <div class="nav-left">
+        <a href="/main">TaftChoice</a>
+    </div>
+    <div class="nav-right">
+        {{#unless isLoggedIn}}
+        <a href="/SignUp"><button type="button">Sign In</button></a>
+        <a href="/Login"><button type="button">Log In</button></a>
+        {{else}}
+            {{#if isEdit}}
+            <a href="/editProfile"><button type="button">Edit Profile</button></a>
+            {{else}}
+            <a href="/profile"><button type="button">Profile</button></a>
+            {{/if}}
+        <form action="/logout" method="post" style="display: inline;"><button type="submit" >Log Out</button></form>
+        {{/unless}}
+    </div>
+</div>

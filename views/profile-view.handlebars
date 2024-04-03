@@ -1,0 +1,214 @@
+<div class="body-parent">
+    {{>navigation}}
+
+    <div class="main-area">
+        <div class="profile-info">
+            <div class="user-details">
+                <div class="profile-image">
+                    <img src="{{users.profilePicture}}"/>
+                </div>
+
+                <div class="profile-details">
+                    <div class="name">
+                        <h1>{{users.name}}</h1>
+                    </div>
+                    <div class="username">
+                        <p>@{{users.username}}</p>
+                    </div>
+                    <div class="bio">
+                        <p>{{users.userBio}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="user-stats">
+                <div class="published">
+                    <div class="published-text">
+                        <p>REVIEWS</p>
+                    </div>
+                    <div class="review-count">
+                        <h2>{{total_revs}}</h2> <!--replace this part later on-->
+                    </div>
+                </div>
+        
+                <div class="likes">
+                    <div class="like-text">
+                        <p>UPVOTES</p>
+                    </div>
+                    <div class="like-count">
+                        <h2>{{users.upvotes}}</h2> <!--replace this part later on-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="review-container">
+            <div class="section-item">
+                <section>
+                    <div class="section-container">
+                        <div class="review-title">
+                            <p>Reviews</p>
+                        </div>
+                        {{#each profile_review_list}}
+                        <div class="review">
+                            <div class="review-header">
+                                <div class="img-place">
+                                    <img src="{{getStallProperty ../data_stall this.stall-number 'stall-image'}}"/>
+                                </div>
+
+                                <div class="place-info">
+                                    <div class="place-name">
+                                        <p>{{getStallProperty ../data_stall this.stall-number 'stall-name'}}</p>
+                                    </div>
+                                    <div class="place-must-try">
+                                        <p>Must try: {{review-reco}}</p>
+                                    </div>
+                                    <div class="date">
+                                        <p>{{review-date}}</p>
+                                    </div>
+
+                                    <div class="quality-rating">
+                                        <p>Quality: </p>
+                                        {{#ifcount user-qual-rating 5}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-qual-rating 4}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-qual-rating 3}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                         {{#ifcount user-qual-rating 2}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-qual-rating 1}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+                                    </div>
+
+                                    <div class="service-rating">
+                                        <p>Service: </p>
+                                        {{#ifcount user-serv-rating 5}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-serv-rating 4}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-serv-rating 3}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                         {{#ifcount user-serv-rating 2}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-serv-rating 1}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+                                    </div>
+
+                                    <div class="pricing-rating">
+                                        <p>Pricing: </p>
+                                        {{#ifcount user-price-rating 5}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-price-rating 4}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-price-rating 3}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                         {{#ifcount user-price-rating 2}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+
+                                        {{#ifcount user-price-rating 1}}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        {{/ifcount}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="review-content">
+                                <p>{{review-comment}}</p>
+                            </div>
+
+                            {{>guest-review-reaction}}
+                        </div>
+
+                        {{/each}}
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</div>
