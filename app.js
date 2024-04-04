@@ -14,12 +14,8 @@ const initializeData = require('./scripts/initializeData');
 
 var hbs = require('handlebars');
 
-let userID = null;
-let stall_id = 0;
-let isLoggedIn;                         //indicator if you are logged in.
-let isEdit = false;
 
-module.exports = { userID, stall_id, isLoggedIn, isEdit };
+module.exports = { express, server };
 
 //adapted from: https://stackoverflow.com/questions/34252817/handlebarsjs-check-if-a-string-is-equal-to-a-value
 hbs.registerHelper('ifcount', function (a, b, options) {
@@ -99,8 +95,11 @@ server.use(express.static('public'));
 //mongoose part
 const mongoose = require('mongoose');
 const mongoURI = process.env.MONGODB_URI;
+const dbName = process.env.DBNAME;
 
-mongoose.connect(mongoURI);
+const fullMongoURI = `mongodb://localhost:27017`;
+
+mongoose.connect(fullMongoURI);
 
 const controllers = ['controller'];
 for(var i=0; i<controllers.length; i++){
