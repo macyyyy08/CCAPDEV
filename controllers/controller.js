@@ -11,7 +11,7 @@ let { express, server } = require('../app');
 
 
 const initializeSession = session({
-    secret: 'P7^a2!sT&6g#9DnY@5rE*pBx$2fGhKm3', // Add your secret key here
+    secret: process.env.SESSION_KEY, // Add your secret key here
     resave: false,
     saveUninitialized: true,
 
