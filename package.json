@@ -13,9 +13,12 @@
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
     "mongoos": "^0.0.1-security",
-    "mongoose": "^8.2.4",
-    "multer": "^1.4.5-lts.1"
+    "mongoose": "^8.3.0",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "uuid": "^9.0.1"
   },
   "description": "TaftChoice is a web application designed specifically for DLSU students and anyone in Taft who seeks delicious food options within Agno Compound. Making decisions on where to dine can be daunting and tiring, especially for busy students. The app's goal is to simplify this process by providing a comprehensive platform where users can easily access reviews and essential information about food stalls in Agno."
 }
