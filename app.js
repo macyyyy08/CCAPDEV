@@ -96,7 +96,7 @@ server.use(express.static('public'));
 const mongoose = require('mongoose');
 const mongoURI = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(mongoURI);
 
 const controllers = ['controller'];
 for(var i=0; i<controllers.length; i++){
