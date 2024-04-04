@@ -75,7 +75,11 @@ hbs.registerHelper('redirectToAddReview', function(stallId, isLogged) {
 
 hbs.registerHelper('registerUpvote', function(reviewID, upvote) {
     // Construct the URL with the stall ID as a query parameter
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> refs/remotes/origin/main
     const redirectUrl = `/registerUpvote?reviewID=${reviewID}&vote=${upvote}`;
     console.log(reviewID);
 
@@ -100,6 +104,7 @@ server.use(express.static('public'));
 //mongoose part
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://kennethestabillo:nKljLnlzV8gjqqoQ@cluster0.9pmnfjo.mongodb.net/TaftChoice');
+
 
 
 const controllers = ['controller'];

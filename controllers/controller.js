@@ -480,7 +480,11 @@ function add(server){
             try {
                 if (upvoteData) {
                     if (upvote === upvoteData.helpful) {
+<<<<<<< HEAD
                         await upvoteData.deleteOne();
+=======
+                        await Upvote.deleteOne({ reviewID: reviewID, userID: userID });
+>>>>>>> refs/remotes/origin/main
                         res.redirect(`/storereview?stallId=${stall_id}`);
                     } else {
                         upvoteData.helpful = upvote;
