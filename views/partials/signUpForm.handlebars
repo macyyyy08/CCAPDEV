@@ -1,7 +1,7 @@
 <div class="signup-box">
     <div class="signup-content">
         <h2>Sign Up</h2>
-        <form id="signup-form" onsubmit="return checkSignInForm();" method="post" enctype="multipart/form-data">
+        <form id="signup-form" onsubmit="return checkSignInForm();" method="post">
             <input type="text" name="fullName" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="text" name="username" placeholder="Username" required>
@@ -10,7 +10,7 @@
             <textarea id="review" name="review" rows="8" cols="50" placeholder="Bio"></textarea>
             <br>
             <label for="profilePicture" class="profile-label">Insert Profile Picture</label>
-            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+            <input type="text" id="profilePicture" name="profilePicture">
             <button type="submit">Sign Up</button>
         </form>
     </div>
