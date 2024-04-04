@@ -95,11 +95,8 @@ server.use(express.static('public'));
 //mongoose part
 const mongoose = require('mongoose');
 const mongoURI = process.env.MONGODB_URI;
-const dbName = process.env.DBNAME;
 
-const fullMongoURI = `mongodb://localhost:27017`;
-
-mongoose.connect(fullMongoURI);
+mongoose.connect(MONGODB_URI);
 
 const controllers = ['controller'];
 for(var i=0; i<controllers.length; i++){
