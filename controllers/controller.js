@@ -4,11 +4,39 @@ const Stall = require('../models/stalls');
 const Upvote = require('../models/upvotes');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const session = require('express-session');
+const uuid = require('uuid');
+
+let { express, server } = require('../app');
 
 
-let { userID, stall_id, isLoggedIn, isEdit } = require('../app');
+const initializeSession = session({
+    secret: 'P7^a2!sT&6g#9DnY@5rE*pBx$2fGhKm3', // Add your secret key here
+    resave: false,
+    saveUninitialized: true,
 
-isLoggedIn = false;
+    genid: function(req) {
+        return uuid.v4(); // Generate a unique session ID
+    },
+    cookie: {
+        secure: false, // Change to true if using HTTPS
+        maxAge: 24 * 60 * 60 * 1000, // 1 day (adjust as needed)
+        httpOnly: true, // Helps prevent XSS attacks
+        sameSite: 'strict' // Helps prevent CSRF attacks
+    },
+});
+
+server.use(initializeSession);
+
+server.use((req, res, next) => {
+    req.session.userID = req.session.userID || null; // Initialize or retain userID
+    req.session.stall_id = req.session.stall_id || 0; // Initialize or retain stall_id
+    req.session.isLoggedIn = req.session.isLoggedIn || false; // Initialize or retain isLoggedIn
+    req.session.isEdit = req.session.isEdit || false; // Initialize or retain isEdit
+    next();
+});
+
+
 
 function errorFn(err){
     console.log('Error fond. Please trace!');
@@ -23,15 +51,16 @@ function add(server){
         try {
             const data_stall = await Stall.find().lean();
 
-            isEdit = false;
-            console.log(isLoggedIn);
+            req.session.isEdit = false;
+            console.log(req.session.isLoggedIn);
+            console.log(req.session.userID);
 
             resp.render('main', {
                 layout: 'index',
                 title: 'TaftChoice',
                 data_stall: data_stall,
-                isLoggedIn: isLoggedIn,
-                isEdit: isEdit,
+                isLoggedIn: req.session.isLoggedIn,
+                isEdit: req.session.isEdit,
             });
 
         } catch (err) {
@@ -44,12 +73,12 @@ function add(server){
     //display review [raiki]
     server.get('/storereview', async function(req, res) {
         let stallId = parseInt(req.query.stallId);
-        stall_id = stallId;
+        req.session.stall_id = stallId;
 
         try {
-            const data_stall = await Stall.findOne({ 'stall-number': stall_id }).lean();
+            const data_stall = await Stall.findOne({ 'stall-number': req.session.stall_id }).lean();
             const all_stall_data = await Stall.find().lean();
-            const review_data = await UserReview.find({ 'stall-number': stallId }).lean();
+            const review_data = await UserReview.find({ 'stall-number': req.session.stall_id }).lean();
             const avg_data = review_data.map(review => review['average-rating']);
             const total_reviews = review_data.length;
 
@@ -64,7 +93,7 @@ function add(server){
             console.log(all_stall_data);
             console.log(review_data);
             console.log(users);
-            console.log(isLoggedIn);
+            console.log(req.session.isLoggedIn);
 
             res.render('storeView', {
                 layout          : 'store-review',
@@ -76,9 +105,9 @@ function add(server){
                 all_stall_data  : all_stall_data,
                 review_data     : review_data,
                 users           : users,
-                stall_id        : stallId,
-                isLoggedIn      : isLoggedIn,
-                isEdit          : isEdit,
+                stall_id        : req.session.stall_id,
+                isLoggedIn      : req.session.isLoggedIn,
+                isEdit          : req.session.isEdit,
                 averageRating   : averageRating.toFixed(1),
                 total_reviews   : total_reviews
             });
@@ -94,11 +123,11 @@ function add(server){
         try {
             let stallId = parseInt(req.query.stallId);
 
-            stall_id = stallId;
+            req.session.stall_id = stallId;
         
-            const data_stall = await Stall.findOne({ 'stall-number': stall_id });      //isolated info the current stall clicked
+            const data_stall = await Stall.findOne({ 'stall-number': req.session.stall_id });      //isolated info the current stall clicked
             
-            console.log(stall_id);
+            console.log(req.session.stall_id);
             console.log(data_stall); //empty array output
         
             const stall_name = data_stall['stall-name'];
@@ -109,13 +138,13 @@ function add(server){
             res.render('AddReview', {
                 layout          : 'ReviewManagement',
                 title           :  'Review: ' + stall_name,
-                userID          :  userID,
+                userID          :  req.session.userID,
                 stall_image     :  stall_image,
                 data_stall      :  data_stall,
-                stall_id        :  stall_id,
+                stall_id        :  req.session.stall_id,
                 stall_name     :  stall_name,
-                isLoggedIn      : isLoggedIn,
-                isEdit          : isEdit
+                isLoggedIn      : req.session.isLoggedIn,
+                isEdit          : req.session.isEdit
             });
 
         } catch (error) {
@@ -141,17 +170,14 @@ function add(server){
                 console.log("No reviews found.");
             }
 
-
-
-            
             // Calculate average rating
             const averageRating = (parseInt(rating1) + parseInt(rating2) + parseInt(rating3)) / 3;
     
             // Create a new UserReview object
             const newUserReview = new UserReview({
                 reviewID: latestReviewID,
-                userID: userID,
-                'stall-number': stall_id, // Assuming stall_id is accessible here
+                userID: req.session.userID,
+                'stall-number': req.session.stall_id, // Assuming stall_id is accessible here
                 'average-rating': averageRating.toFixed(1),
                 'user-qual-rating': parseInt(rating1),
                 'user-serv-rating': parseInt(rating2),
@@ -168,8 +194,8 @@ function add(server){
             // Save the review to the database
             await newUserReview.save();
     
-            const data_stall = await Stall.findOne({ 'stall-number': stall_id }); 
-            const data_review = await UserReview.find({ 'stall-number': stall_id }); 
+            const data_stall = await Stall.findOne({ 'stall-number': req.session.stall_id }); 
+            const data_review = await UserReview.find({ 'stall-number': req.session.stall_id }); 
 
             if (data_review.length > 1) {
 
@@ -193,16 +219,13 @@ function add(server){
             }
 
             // Redirect the user back to the stall page
-            res.redirect(`/storereview?stallId=${stall_id}`);
+            res.redirect(`/storereview?stallId=${req.session.stall_id}`);
     
         } catch (error) {
             console.error('Error while adding review:', error);
             res.status(500).send('Internal Server Error');
         }
     });
-
-
-
 
     server.get('/editreview',async function(req, res) {
         try {
@@ -211,12 +234,12 @@ function add(server){
             const review_data = await UserReview.findOne({ reviewID: reviewId });
         
             const stall_number = review_data['stall-number'];
-            stall_id = stall_number;
+            req.session.stall_id = stall_number;
         
             const stall_data = await Stall.findOne({ 'stall-number': stall_number });
             const stall_name = stall_data['stall-name'];
         
-            isEdit = false;
+            req.session.isEdit = false;
         
             res.render('EditReview', {
                 layout          : 'ReviewManagement',
@@ -228,8 +251,8 @@ function add(server){
                 service         : review_data['user-serv-rating'],
                 price           : review_data['user-price-rating'],
                 recom           : review_data['review-reco'],
-                isLoggedIn      : isLoggedIn,
-                isEdit          : isEdit,
+                isLoggedIn      : req.session.isLoggedIn,
+                isEdit          : req.session.isEdit,
                 reviewID        : reviewId
             });
         } catch (error) {
@@ -268,7 +291,6 @@ function add(server){
 
             checkEditForm(req.body.review);
 
-
             reviewResult.save().then(function(result){
                 resp.redirect('/profile');
             }).catch(errorFn);
@@ -282,9 +304,9 @@ function add(server){
         const deleteQuery = {reviewID: reviewId};
 
         const review_data = await UserReview.findOne({ reviewID: reviewId });
-        stall_id = review_data['stall-number'];
+        req.session.stall_id = review_data['stall-number'];
 
-        console.log(stall_id);
+        console.log(req.session.stall_id);
 
         UserReview.deleteOne(deleteQuery).then(function(deleteResult){
             console.log('Delete successful!');
@@ -314,10 +336,10 @@ function add(server){
                 
                 if (passwordMatch) {
                     // Save userID for info fetching
-                    userID = user.userID;
-                    console.log(userID);
+                    req.session.userID = user.userID;
+                    console.log(req.session.userID);
     
-                    isLoggedIn = true;
+                    req.session.isLoggedIn = true;
                     res.redirect('/main'); // Redirect to main page after successful login
                 } else {
                     // Handle incorrect password
@@ -342,9 +364,9 @@ function add(server){
 
 
     server.post('/logout', function(req, res) {
-        userID = null;
-        isEdit = false;
-        isLoggedIn = false;
+        req.session.userID = null;
+        req.session.isEdit = false;
+        req.session.isLoggedIn = false;
         res.redirect('/main'); // Redirect to main page after logging out
     });
 
@@ -365,13 +387,13 @@ function add(server){
     
             if (user) {
                 // Compare the password provided by the user with the hashed password stored in the database
-                userID = user.userID;
-                isLoggedIn = true;
+                req.session.userID = user.userID;
+                req.session.isLoggedIn = true;
 
-                userID = user.userID;
-                console.log(userID);
+                req.session.userID = user.userID;
+                console.log(req.session.userID);
 
-                isLoggedIn = true;
+                req.session.isLoggedIn = true;
                 res.redirect('/main');
 
             } else {
@@ -438,21 +460,21 @@ function add(server){
     });
 
     server.get('/registerUpvote', async function(req, res) {
-        if (isLoggedIn) {
+        if (req.session.isLoggedIn) {
             const reviewID = parseInt(req.query.reviewID);
             const upvote = req.query.vote;
-            const upvoteData = await Upvote.findOne({reviewID: reviewID, userID: userID});
+            const upvoteData = await Upvote.findOne({reviewID: reviewID, userID: req.session.userID});
     
             try {
                 if (upvoteData) {
                     if (upvote === upvoteData.helpful) {
                         await upvoteData.deleteOne();
-                        res.redirect(`/storereview?stallId=${stall_id}`);
+                        res.redirect(`/storereview?stallId=${req.session.stall_id}`);
                     } else {
                         upvoteData.helpful = upvote;
                         await upvoteData.save();
         
-                        res.redirect(`/storereview?stallId=${stall_id}`);
+                        res.redirect(`/storereview?stallId=${req.session.stall_id}`);
                     }
                 } else {
                     const latestUpvote = await Upvote.findOne().sort({ upvoteID: -1 }).limit(1);
@@ -473,12 +495,12 @@ function add(server){
                         upvoteID: latestUpvoteID,
                         reviewID: reviewID,
                         authorID: reviewData.userID,
-                        userID: userID,
+                        userID: req.session.userID,
                         helpful: upvote
                     });
     
                     await newUpvote.save();
-                    res.redirect(`/storereview?stallId=${stall_id}`);
+                    res.redirect(`/storereview?stallId=${req.session.stall_id}`);
                 }
     
             } catch (err) {
@@ -501,7 +523,7 @@ function add(server){
 
         const user = await User.findOne({username  :  req.query.username});
 
-        if (user.userID === userID) {
+        if (user.userID === req.session.userID) {
             resp.redirect('/profile');
         }
 
@@ -524,7 +546,7 @@ function add(server){
                         users           : userResult,
                         data_stall      : stallResult,
                         profile_review_list: reviewResult,
-                        isLoggedIn      : isLoggedIn,
+                        isLoggedIn      : req.session.isLoggedIn,
                         isEdit          : isEdit,
                         total_revs      : total_revs,
                         totalUpvotes : totalUpvotes
@@ -539,10 +561,10 @@ function add(server){
     //This loads profile.html file in MCO1
     server.get('/profile', async function(req, resp){
 
-        const data_stall = await Stall.findOne({ 'stall-number': stall_id }); 
-        const data_review = await UserReview.find({ 'stall-number': stall_id });
-        const helpfulTrueCount = await Upvote.countDocuments({ authorID: userID, helpful: true });
-        const helpfulFalseCount = await Upvote.countDocuments({ authorID: userID, helpful: false });
+        const data_stall = await Stall.findOne({ 'stall-number': req.session.stall_id }); 
+        const data_review = await UserReview.find({ 'stall-number': req.session.stall_id });
+        const helpfulTrueCount = await Upvote.countDocuments({ authorID: req.session.userID, helpful: true });
+        const helpfulFalseCount = await Upvote.countDocuments({ authorID: req.session.userID, helpful: false });
         const totalUpvotes = helpfulTrueCount - helpfulFalseCount;        
 
         if (data_review.length > 0) {
@@ -560,13 +582,11 @@ function add(server){
             await data_stall.save();
         }
 
-        const searchQuery = {userID: userID};
+        const searchQuery = {userID: req.session.userID};
         const stallQuery = {stall_number: req.query['stall-number']};
-        const review = await UserReview.find({userID:userID});
+        const review = await UserReview.find({userID: req.session.userID});
 
         const total_revs = review.length;
-
-
 
         User.findOne(searchQuery).lean().then(function(userResult){
             let userID = userResult.userID;
@@ -580,7 +600,7 @@ function add(server){
                         users           : userResult,
                         data_stall      : stallResult,
                         profile_review_list: reviewResult,
-                        isLoggedIn      : isLoggedIn,
+                        isLoggedIn      : req.session.isLoggedIn,
                         isEdit          : isEdit,
                         total_revs      : total_revs,
                         totalUpvotes    :  totalUpvotes
@@ -596,7 +616,7 @@ function add(server){
 
     //edits the profile of the user
     server.get('/editProfile', function(req, resp){
-        const editQuery = {userID: userID};
+        const editQuery = {userID: req.session.userID};
         User.findOne(editQuery).lean().then(function(result){
             let name = result.name;
             let username = result.username;
@@ -606,7 +626,7 @@ function add(server){
             resp.render('edit-profile', {
                 layout: 'edit-profile-index',
                 title           : 'Edit Profile',
-                isLoggedIn      : isLoggedIn,
+                isLoggedIn      : req.session.isLoggedIn,
                 name: name,
                 username: username,
                 pic : pic,
@@ -627,7 +647,7 @@ function add(server){
 
     //edits the profile of the user
     server.post('/save-profile-changes', function(req, resp){
-        const updateQuery = {userID: userID};
+        const updateQuery = {userID: req.session.userID};
 
         User.findOne(updateQuery).then(function(userResult){    
             console.log('Update Successful!');
