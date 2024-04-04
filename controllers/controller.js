@@ -3,8 +3,8 @@ const UserReview = require('../models/reviews');
 const Stall = require('../models/stalls');
 const Upvote = require('../models/upvotes');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
 const path = require('path');
+
 
 let { userID, stall_id, isLoggedIn, isEdit } = require('../app');
 
@@ -18,38 +18,6 @@ function errorFn(err){
 function add(server){
     //webpages part
     const e = require('express');
-
-    var storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'uploads/'); // Destination folder for profile pictures
-        },
-        filename: function (req, file, cb) {
-            let ext = path.extname(file.originalname)
-            cb(null, Date.now() + ext)
-        }
-    });
-    
-    var upload = multer({
-        storage: storage,
-        fileFilter: function(req, file, callback) {
-            const fileExtension = path.extname(file.originalname).toLowerCase();
-
-            // Allowed file extensions
-            const allowedExtensions = ['.png', '.jpg', '.jpeg'];
-
-            // Check if the file extension is allowed
-            if (allowedExtensions.includes(fileExtension)) {
-                callback(null, true);
-            } else {
-                console.log('JPG & PNG only.')
-                callback(null, false)
-            }
-        },
-        limits: {
-            fileSize: 1024 * 1024 * 2
-        }
-
-    });
 
     server.get(['/', '/main'], async function(req, resp){
         try {
@@ -281,11 +249,10 @@ function add(server){
     }
 
     //push changes on review
-    server.post('/save-review-changes',upload.single('profilePicture'), async function(req, resp){
+    server.post('/save-review-changes', async function(req, resp){
         const reviewId = parseInt(req.query.reviewId);
         const updateQuery ={reviewID: reviewId};
 
-        const submittedPic = req.file ? req.file.path : null;
         const averageRating = (parseInt(req.body.rating1) + parseInt(req.body.rating2) + parseInt(req.body.rating3)) / 3;
 
         UserReview.findOne(updateQuery).then(function(reviewResult){    
@@ -297,7 +264,7 @@ function add(server){
             reviewResult['user-serv-rating'] = parseInt(req.body.rating2);
             reviewResult['user-price-rating'] = parseInt(req.body.rating3);
             reviewResult['review-reco'] = req.body.recom;
-            reviewResult['review-image'] = submittedPic;
+            reviewResult['review-image'] = "";
 
             checkEditForm(req.body.review);
 
@@ -427,16 +394,15 @@ function add(server){
         });
     });
 
-    server.post('/signup', upload.single('profilePicture'), async function(req, res) {
+    server.post('/signup', async function(req, res) {
         let hashedPassword;
-        console.log(req.file);
 
         const submittedFullName = req.body.fullName;
         const submittedEmail = req.body.email;
         const submittedUsername = req.body.username;
         const submittedPass1 = req.body.password;
         const submittedBio = req.body.review;
-        const submittedPic = req.file ? req.file.path : null;
+        const submittedPic = req.body.profilePicture;
 
         try {
             const latestUser = await User.findOne().sort({ userID: -1 }).limit(1);
@@ -480,11 +446,7 @@ function add(server){
             try {
                 if (upvoteData) {
                     if (upvote === upvoteData.helpful) {
-<<<<<<< HEAD
                         await upvoteData.deleteOne();
-=======
-                        await Upvote.deleteOne({ reviewID: reviewID, userID: userID });
->>>>>>> refs/remotes/origin/main
                         res.redirect(`/storereview?stallId=${stall_id}`);
                     } else {
                         upvoteData.helpful = upvote;
@@ -647,6 +609,7 @@ function add(server){
                 isLoggedIn      : isLoggedIn,
                 name: name,
                 username: username,
+                pic : pic,
                 bio: bio
             });
         }).catch(errorFn);
@@ -663,20 +626,21 @@ function add(server){
     }
 
     //edits the profile of the user
-    server.post('/save-profile-changes',upload.single('profilePicture'), function(req, resp){
-        console.log(req.file);
+    server.post('/save-profile-changes', function(req, resp){
         const updateQuery = {userID: userID};
 
-        const submittedPic = req.file ? req.file.path : null;
-        
         User.findOne(updateQuery).then(function(userResult){    
             console.log('Update Successful!');
             userResult.name = req.body.name;
             userResult.username = req.body.username;
             userResult.userBio = req.body.bio;
-            userResult.profilePicture = submittedPic;
+            userResult.profilePicture = req.body.profilePicture;
 
-            checkForm(userResult.name, userResult.username, userResult.bio);
+            console.log(req.body.name);
+            console.log(req.body.username);
+
+            checkForm(userResult.name, userResult.username);
+
 
             userResult.save().then(function(result){
                 resp.redirect('/profile');
