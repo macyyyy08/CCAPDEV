@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 server.use(bodyParser.json());
 server.use(express.json()); 
 server.use(express.urlencoded({ extended: true }));
-server.use('/uploads', express.static('uploads'));
 const handlebars = require('express-handlebars');
 const initializeData = require('./scripts/initializeData');
 
@@ -75,11 +74,7 @@ hbs.registerHelper('redirectToAddReview', function(stallId, isLogged) {
 
 hbs.registerHelper('registerUpvote', function(reviewID, upvote) {
     // Construct the URL with the stall ID as a query parameter
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> refs/remotes/origin/main
     const redirectUrl = `/registerUpvote?reviewID=${reviewID}&vote=${upvote}`;
     console.log(reviewID);
 
@@ -103,9 +98,12 @@ server.use(express.static('public'));
 
 //mongoose part
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://kennethestabillo:nKljLnlzV8gjqqoQ@cluster0.9pmnfjo.mongodb.net/TaftChoice');
+const mongoURI = process.env.MONGODB_URI;
+const dbName = process.env.DBNAME;
 
+const fullMongoURI = `${mongoURI}/${dbName}`;
 
+mongoose.connect(fullMongoURI);
 
 const controllers = ['controller'];
 for(var i=0; i<controllers.length; i++){
