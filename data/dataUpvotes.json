@@ -1,0 +1,39 @@
+[
+    {
+        "upvoteID": 101,
+        "reviewID": 1,
+        "authorID": 1001,
+        "userID": 1001,
+        "helpful": true
+    },{
+        "upvoteID": 102,
+        "reviewID": 7,
+        "authorID": 1002,
+        "userID": 1002,
+        "helpful": true
+    },{
+        "upvoteID": 103,
+        "reviewID": 13,
+        "authorID": 1003,
+        "userID": 1003,
+        "helpful": false
+    }, {
+        "upvoteID": 104,
+        "reviewID": 1,
+        "authorID": 1001,
+        "userID": 1004,
+        "helpful": false
+    },{
+        "upvoteID": 105,
+        "reviewID": 7,
+        "authorID": 1002,
+        "userID": 1005,
+        "helpful": true
+    },{
+        "upvoteID": 106,
+        "reviewID": 13,
+        "authorID": 1003,
+        "userID": 1006,
+        "helpful": false
+    }
+]

@@ -37,7 +37,6 @@ hbs.registerHelper('endingRow', function(stall_ID) {
     return stall_ID % 3 == 0;
 });
 
-
 hbs.registerHelper('getUserProperty', function(users, userID, property) {
     // Find the user object with the given userID
     const user = users.find(user => user.userID === userID);
@@ -68,12 +67,21 @@ hbs.registerHelper('redirectToAddReview', function(stallId, isLogged) {
 
     if (!isLogged) {
         return '/login';
-        
     }
     else {
         return redirectUrl;
     }
 });
+
+hbs.registerHelper('registerUpvote', function(reviewID, upvote) {
+    // Construct the URL with the stall ID as a query parameter
+
+    const redirectUrl = `/registerUpvote?reviewID=${reviewID}&vote=${upvote}`;
+    console.log(reviewID);
+
+    return redirectUrl;
+});
+
 
 hbs.registerHelper('redirectToGuestProfile', function(username) {
     // Construct the URL with the stall ID as a query parameter
@@ -91,7 +99,8 @@ server.use(express.static('public'));
 
 //mongoose part
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/TaftChoice');
+mongoose.connect('mongodb+srv://kennethestabillo:nKljLnlzV8gjqqoQ@cluster0.9pmnfjo.mongodb.net/TaftChoice');
+
 
 const controllers = ['controller'];
 for(var i=0; i<controllers.length; i++){

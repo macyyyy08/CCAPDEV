@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const UserReview = require('../models/reviews');
 const Stall = require('../models/stalls');
+const Upvote = require('../models/upvotes');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
@@ -318,9 +319,6 @@ function add(server){
 
         console.log(stall_id);
 
-
-
-
         UserReview.deleteOne(deleteQuery).then(function(deleteResult){
             console.log('Delete successful!');
             resp.redirect('/profile');
@@ -391,6 +389,37 @@ function add(server){
         });
     });
 
+    server.post('/forgotpassword', async function(req, res) {
+        const { email, username } = req.body;
+
+        try {
+            // Find user by email in MongoDB
+            const user = await User.findOne({ email: email, username: username });
+    
+            if (user) {
+                // Compare the password provided by the user with the hashed password stored in the database
+                userID = user.userID;
+                isLoggedIn = true;
+
+                userID = user.userID;
+                console.log(userID);
+
+                isLoggedIn = true;
+                res.redirect('/main');
+
+            } else {
+                res.render('Login', {
+                    layout: 'AccountManagement',
+                    title: 'TaftChoice Login',
+                    error: 'Invalid email or username. Please try again.'
+                });
+            }
+        } catch (error) {
+            console.error('Error occurred during login:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    });
+
     server.get('/signup', function(req, res) {
         res.render('SignUp', {
             layout          : 'AccountManagement',
@@ -442,14 +471,78 @@ function add(server){
         }
     });
 
+    server.get('/registerUpvote', async function(req, res) {
+        if (isLoggedIn) {
+            const reviewID = parseInt(req.query.reviewID);
+            const upvote = req.query.vote;
+            const upvoteData = await Upvote.findOne({reviewID: reviewID, userID: userID});
+    
+            try {
+                if (upvoteData) {
+                    if (upvote === upvoteData.helpful) {
+                        await upvoteData.deleteOne();
+                        res.redirect(`/storereview?stallId=${stall_id}`);
+                    } else {
+                        upvoteData.helpful = upvote;
+                        await upvoteData.save();
+        
+                        res.redirect(`/storereview?stallId=${stall_id}`);
+                    }
+                } else {
+                    const latestUpvote = await Upvote.findOne().sort({ upvoteID: -1 }).limit(1);
+                    let latestUpvoteID = 101;
+    
+                    if (latestUpvote) {
+                        latestUpvoteID = latestUpvote.upvoteID + 1;
+                        console.log("Latest upvoteID:", latestUpvoteID);
+                    } else {
+                        console.log("No users found.");
+                    }
+
+                    console.log(reviewID);
+                    const reviewData = await UserReview.findOne({reviewID: reviewID});
+                    
+    
+                    const newUpvote = new Upvote({
+                        upvoteID: latestUpvoteID,
+                        reviewID: reviewID,
+                        authorID: reviewData.userID,
+                        userID: userID,
+                        helpful: upvote
+                    });
+    
+                    await newUpvote.save();
+                    res.redirect(`/storereview?stallId=${stall_id}`);
+                }
+    
+            } catch (err) {
+                console.error('Error saving data:', err);
+                // Handle the error            
+            }
+        } else {
+            res.redirect('/Login');
+        }
+    });
+
+
+
     //for Profile View-Only(Guest)
     //this loads the profile-view.html file from MCO1
     server.get('/viewProfile', async function(req, resp){
+
         const searchQuery = {username: req.query.username};
         const stallQuery = {stall_number: req.query['stall-number']};
 
         const user = await User.findOne({username  :  req.query.username});
+
+        if (user.userID === userID) {
+            resp.redirect('/profile');
+        }
+
         const review = await UserReview.find({userID: user.userID });
+        const helpfulTrueCount = await Upvote.countDocuments({ authorID: user.userID, helpful: true });
+        const helpfulFalseCount = await Upvote.countDocuments({ authorID: user.userID, helpful: false });
+        const totalUpvotes = helpfulTrueCount - helpfulFalseCount;
 
         const total_revs = review.length;
 
@@ -467,8 +560,8 @@ function add(server){
                         profile_review_list: reviewResult,
                         isLoggedIn      : isLoggedIn,
                         isEdit          : isEdit,
-                        total_revs      : total_revs
-                        //userID          : userID
+                        total_revs      : total_revs,
+                        totalUpvotes : totalUpvotes
                     });
                 }).catch(errorFn);
             }).catch(errorFn);
@@ -482,7 +575,9 @@ function add(server){
 
         const data_stall = await Stall.findOne({ 'stall-number': stall_id }); 
         const data_review = await UserReview.find({ 'stall-number': stall_id });
-        
+        const helpfulTrueCount = await Upvote.countDocuments({ authorID: userID, helpful: true });
+        const helpfulFalseCount = await Upvote.countDocuments({ authorID: userID, helpful: false });
+        const totalUpvotes = helpfulTrueCount - helpfulFalseCount;        
 
         if (data_review.length > 0) {
             let average = 0;
@@ -521,13 +616,17 @@ function add(server){
                         profile_review_list: reviewResult,
                         isLoggedIn      : isLoggedIn,
                         isEdit          : isEdit,
-                        total_revs      : total_revs
+                        total_revs      : total_revs,
+                        totalUpvotes    :  totalUpvotes
                         //userID          : userID
                     });
                 }).catch(errorFn);
             }).catch(errorFn);
         }).catch(errorFn);
     });
+
+
+
 
     //edits the profile of the user
     server.get('/editProfile', function(req, resp){
